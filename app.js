@@ -3,7 +3,6 @@ const cors = require("cors");
 
 const app = express();
 const contactsRouter = require("./app/routes/contact.route");
-const err = require("./app/api-error");  //dinh nghia error
 const ApiError = require("./app/api-error");
 
 
@@ -26,7 +25,7 @@ app.use((req, res, next)=>{
 
 //Middleware xử lý tập trung, khi các route gọi next(error) thì sẽ chuyển về middleware xử lí lỗi này
 app.use( (err, req, res, next)=>{
-    res.status(500 || StatusCode).json({
+    res.status(err.statusCode || 500).json({
         message : err.message || "Internal Server Error",
     });
 });
